@@ -29,7 +29,7 @@ ax.set_ylim(0, 20)
 ax.set_aspect('equal')
 
 # title, and random number generation for unique symbol
-plt.title("CS464 - Odd One Out", color='Red', fontsize=30)
+plt.title("Find the Odd One Out", color='Red', fontsize=30)
 searchItem_x = random.randint(2, 19)
 searchItem_y = random.randint(2, 19)
 #hex codes for hearts and clubs
