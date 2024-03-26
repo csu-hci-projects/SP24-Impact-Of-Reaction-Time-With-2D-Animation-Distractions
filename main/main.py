@@ -19,6 +19,7 @@ def hideWindow(event):
     startScreen = None
     startText = None
     
+userID = 00
 #White background
 image_size = (5, 5)
 image = np.ones((image_size[0], image_size[1], 3))
@@ -92,6 +93,8 @@ def objectFound(click):
         end = time.time()
         totalTime = end - startTime
         formattedTime = format(totalTime, '.2f')
+        with open('dataCollection.txt', 'w') as file:
+            file.write(formattedTime)
         print("Element Found in:", formattedTime, "seconds!")    
       
 #connect the click event to the onclick function
