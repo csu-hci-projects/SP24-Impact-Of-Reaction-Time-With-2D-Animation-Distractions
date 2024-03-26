@@ -6,7 +6,13 @@ MAIN_SCRIPT = main.py
 
 all:
 	@echo "Setting up the project..."
-	# run python3 main.py -> due to change later with additional files.
+	# RUN python3 main.py
+	# make sure that the following libraries are installed on your machine:
+	# import matplotlib.pyplot as plt
+	# import numpy as np
+	# import random
+	# import textwrap
+	# import matplotlib.patches as patches
 # 'run' target for running the main Python script
 run:
 	$(PYTHON) $(MAIN_SCRIPT)
