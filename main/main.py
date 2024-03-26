@@ -3,16 +3,19 @@ import numpy as np
 import random
 import textwrap
 import matplotlib.patches as patches
+import time
 
 #function to hide the grid so user cant see it till they are ready to start.
 def hideWindow(event):
     global startScreen
     global startText
+    global startTime
     if startScreen and startText:
         startScreen.remove() 
         startText.remove()
         fig.canvas.draw() 
         fig.canvas.mpl_disconnect(cid)
+        startTime = time.time()
     startScreen = None
     startText = None
     
@@ -81,12 +84,15 @@ for i in range(1, 20):
             ax.text(i, j, heartSymbol, fontsize=15, ha='center', va='center', color='black')
 
 #mouse clicks
+#start = time.time()
 def objectFound(click):
     #range for click detection
     tolerance = 0.3
     if abs(click.xdata - searchItem_x) < tolerance and abs(click.ydata - searchItem_y) < tolerance:
-        print("Element Found!")    
-        #Adding directions to the right
+        end = time.time()
+        totalTime = end - startTime
+        formattedTime = format(totalTime, '.2f')
+        print("Element Found in:", formattedTime, "seconds!")    
       
 #connect the click event to the onclick function
 fig.canvas.mpl_connect('button_press_event', objectFound)
