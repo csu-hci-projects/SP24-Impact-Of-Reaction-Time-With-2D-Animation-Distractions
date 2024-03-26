@@ -76,7 +76,7 @@ heartSymbol = '\u2665'
 for i in range(1, 20):
     for j in range(1, 20):
         if i == searchItem_x and j == searchItem_y:
-            ax.text(i, j, clubSymbol, fontsize=15, ha='center', va='center', color='red')
+            ax.text(i, j, clubSymbol, fontsize=15, ha='center', va='center', color='gray')
         else:
             ax.text(i, j, heartSymbol, fontsize=15, ha='center', va='center', color='black')
 
