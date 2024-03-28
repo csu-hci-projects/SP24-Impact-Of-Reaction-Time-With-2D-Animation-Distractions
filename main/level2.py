@@ -28,13 +28,13 @@ image = np.ones((image_size[0], image_size[1], 3))
 
 #Image to display
 fig, ax = plt.subplots(figsize=(12, 8))
-fig.patch.set_facecolor('#89CFF0')
+fig.patch.set_facecolor('#b3c7f7')
 ax.imshow(image, extent=[0, image_size[1], 0, image_size[0]])
 
 #20x20 grid
 ax.set_xticks(np.arange(-0.5, 20, 1), minor=True)
 ax.set_yticks(np.arange(-0.5, 20, 1), minor=True)
-ax.grid(True, color='white', linewidth=3)
+ax.grid(True, color='#b3c7f7', linewidth=3)
 ax.tick_params(which='minor', size=0)
 
 #Remove tick labels and marks
@@ -50,7 +50,7 @@ ax.set_aspect('equal')
 
 # Create a start screen that covers the whole plot
 # Allows the grid to be hidden for initial start
-startScreen = patches.Rectangle((-5, -5), 30, 30, color='skyblue', alpha=1.0, zorder=10, label='Click to start')
+startScreen = patches.Rectangle((-5, -5), 30, 30, color='#b3c7f7', alpha=1.0, zorder=10, label='Click to start')
 ax.add_patch(startScreen)
 startText = ax.text(10, 10, 'Start', color='black', fontsize=20, fontweight='bold', ha='center', va='center', zorder=11)
 cid = fig.canvas.mpl_connect('button_press_event', hideWindow)
@@ -74,7 +74,7 @@ label_y_position = 13
 ax.text(label_x_position, label_y_position, wrapped_label, fontsize=12, ha='center', va='center', rotation='horizontal')
 label_x_position = 24 
 label_y_position = 19 
-ax.text(label_x_position, label_y_position, "Time (sec): ", fontsize=20, fontweight='bold', color="yellow", ha='center', va='center', rotation='horizontal') 
+ax.text(label_x_position, label_y_position, "Time (sec): ", fontsize=20, fontweight='bold', color="black", ha='center', va='center', rotation='horizontal') 
 
 #Hex codes for hearts and clubs
 clubSymbol = '\u2663'
@@ -84,7 +84,7 @@ heartSymbol = '\u2665'
 for i in range(1, 20):
     for j in range(1, 20):
         if i == searchItem_x and j == searchItem_y:
-            ax.text(i, j, clubSymbol, fontsize=15, ha='center', va='center', color='gray')
+            ax.text(i, j, clubSymbol, fontsize=15, ha='center', va='center', color='black')
         else:
             ax.text(i, j, heartSymbol, fontsize=15, ha='center', va='center', color='black')
 
@@ -102,7 +102,12 @@ def objectFound(click):
         print("Element Found in:", formattedTime, "seconds!")   
         time_x_position = 24 
         time_y_position = 17 
-        ax.text(time_x_position, time_y_position, formattedTime, fontsize=20, fontweight='bold', color='yellow', ha='center', va='center', rotation='horizontal')    
+        ax.text(time_x_position, time_y_position, formattedTime, fontsize=20, fontweight='bold', color='black', ha='center', va='center', rotation='horizontal')    
+        #hide screen after completion
+        startScreen = patches.Rectangle((-5, -5), 30, 30, color='#b3c7f7', alpha=1.0, zorder=10, label='Click to start')
+        ax.add_patch(startScreen)
+        startText = ax.text(10, 10, 'Congrats! Level Complete!', color='black', fontsize=20, fontweight='bold', ha='center', va='center', zorder=11)
+        cid = fig.canvas.mpl_connect('button_press_event', hideWindow)
         fig.canvas.draw()
 #connect the click event to the onclick function
 fig.canvas.mpl_connect('button_press_event', objectFound)
