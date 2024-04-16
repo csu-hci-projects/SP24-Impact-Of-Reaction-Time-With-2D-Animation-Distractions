@@ -6,21 +6,44 @@ import matplotlib.patches as patches
 import time
 from matplotlib.animation import FuncAnimation
 import sys
+from matplotlib.patches import Circle
+
+def createCircle(ax, y_pos):
+    circle = Circle((10, y_pos), 1, color='#b3c7f7', fill=True)  # X is fixed, Y varies
+    ax.add_patch(circle)
+    return circle
+
+def init():
+    global circle
+    circle = createCircle(ax, 20)  # Start from the top, y=20
+    return circle,
+
+# Update function for the animation
+def move2D(frame):
+    y_pos = 20 - frame  # Assuming 20 is the top and 0 is the bottom
+    circle.set_center((10, y_pos))  # Update circle position
+    return circle,
+
 
 #function to hide the grid so user cant see it till they are ready to start.
 def hideWindow(event):
     global startScreen
     global startText
     global startTime
+    global ani
+    global found
     if startScreen and startText:
+        found = False
         startScreen.remove() 
         startText.remove()
+        found = True
         fig.canvas.draw() 
         fig.canvas.mpl_disconnect(cid)
         startTime = time.time()
+        ani = FuncAnimation(fig, move2D, frames=np.linspace(0, 20, 100), init_func=init, blit=True, interval=20)
     startScreen = None
     startText = None
-    
+
 userID = 00
 #White background
 image_size = (5, 5)
@@ -53,6 +76,7 @@ ax.set_aspect('equal')
 startScreen = patches.Rectangle((-5, -5), 30, 30, color='#b3c7f7', alpha=1.0, zorder=10, label='Click to start')
 ax.add_patch(startScreen)
 startText = ax.text(10, 10, 'Start', color='black', fontsize=20, fontweight='bold', ha='center', va='center', zorder=11)
+# Creating FuncAnimation
 cid = fig.canvas.mpl_connect('button_press_event', hideWindow)
 
 #Title and random number generation for unique symbol
@@ -87,7 +111,7 @@ for i in range(1, 20):
             ax.text(i, j, clubSymbol, fontsize=15, ha='center', va='center', color='black')
         else:
             ax.text(i, j, heartSymbol, fontsize=15, ha='center', va='center', color='black')
-
+            
 #mouse clicks
 #start = time.time()
 def objectFound(click):
@@ -106,6 +130,7 @@ def objectFound(click):
         #hide screen after completion
         startScreen = patches.Rectangle((-5, -5), 30, 30, color='#b3c7f7', alpha=1.0, zorder=10, label='Click to start')
         ax.add_patch(startScreen)
+        found = False
         startText = ax.text(10, 10, 'Congrats! Level Complete!', color='black', fontsize=20, fontweight='bold', ha='center', va='center', zorder=11)
         cid = fig.canvas.mpl_connect('button_press_event', hideWindow)
         fig.canvas.draw()
