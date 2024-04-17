@@ -6,21 +6,59 @@ import matplotlib.patches as patches
 import time
 from matplotlib.animation import FuncAnimation
 import sys
+from matplotlib.patches import Circle
+
+def createCircle(ax, x_pos, y_pos):
+    circle = Circle((x_pos, y_pos), 0.3, color='black', fill=True)
+    ax.add_patch(circle)
+    return circle
+
+def init():
+    global circles
+    corners = [(0, 0), (20, 0), (0, 20), (20, 20)]
+    circles = [createCircle(ax, *corner) for corner in corners]
+    return circles
+
+def move2D(frame):
+    speed = 0.25
+    for i, circle in enumerate(circles):
+        x, y_pos = circle.center
+        if i == 0:  
+            x = x + speed
+            y = y + speed
+        elif i == 1:  
+            x = x + speed
+            y = y + speed
+        elif i == 2:  
+            x = x + speed
+            y = y + speed
+        elif i == 3:
+            x = x + speed
+            y = y + speed
+        
+        circle.set_center((x, y))
+
+    return circles
 
 #function to hide the grid so user cant see it till they are ready to start.
 def hideWindow(event):
     global startScreen
     global startText
     global startTime
+    global ani
+    global found
     if startScreen and startText:
+        found = False
         startScreen.remove() 
         startText.remove()
+        found = True
         fig.canvas.draw() 
         fig.canvas.mpl_disconnect(cid)
         startTime = time.time()
+        ani = FuncAnimation(fig, move2D, frames=np.linspace(0, 20, 100), init_func=init, blit=True, interval=20)
     startScreen = None
     startText = None
-    
+
 userID = 00
 #White background
 image_size = (5, 5)
@@ -53,6 +91,7 @@ ax.set_aspect('equal')
 startScreen = patches.Rectangle((-5, -5), 30, 30, color='#b3c7f7', alpha=1.0, zorder=10, label='Click to start')
 ax.add_patch(startScreen)
 startText = ax.text(10, 10, 'Start', color='black', fontsize=20, fontweight='bold', ha='center', va='center', zorder=11)
+# Creating FuncAnimation
 cid = fig.canvas.mpl_connect('button_press_event', hideWindow)
 
 #Title and random number generation for unique symbol
@@ -87,7 +126,7 @@ for i in range(1, 20):
             ax.text(i, j, clubSymbol, fontsize=15, ha='center', va='center', color='black')
         else:
             ax.text(i, j, heartSymbol, fontsize=15, ha='center', va='center', color='black')
-
+            
 #mouse clicks
 #start = time.time()
 def objectFound(click):
@@ -97,7 +136,7 @@ def objectFound(click):
         end = time.time()
         totalTime = end - startTime
         formattedTime = format(totalTime, '.2f')
-        with open('level1.txt', 'w') as file:
+        with open('level8.txt', 'w') as file:
             file.write(formattedTime)
         print("Element Found in:", formattedTime, "seconds!")   
         time_x_position = 24 
@@ -106,6 +145,7 @@ def objectFound(click):
         #hide screen after completion
         startScreen = patches.Rectangle((-5, -5), 30, 30, color='#b3c7f7', alpha=1.0, zorder=10, label='Click to start')
         ax.add_patch(startScreen)
+        found = False
         startText = ax.text(10, 10, 'Congrats! Level Complete!', color='black', fontsize=20, fontweight='bold', ha='center', va='center', zorder=11)
         cid = fig.canvas.mpl_connect('button_press_event', hideWindow)
         fig.canvas.draw()
