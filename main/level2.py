@@ -9,19 +9,18 @@ import sys
 from matplotlib.patches import Circle
 
 def createCircle(ax, y_pos):
-    circle = Circle((10, y_pos), 1, color='#b3c7f7', fill=True)  # X is fixed, Y varies
+    circle = Circle((10, y_pos), 1, color='black', fill=True)  # X is fixed, Y varies
     ax.add_patch(circle)
     return circle
 
 def init():
     global circle
-    circle = createCircle(ax, 20)  # Start from the top, y=20
+    circle = createCircle(ax, 20)
     return circle,
 
-# Update function for the animation
 def move2D(frame):
-    y_pos = 20 - frame  # Assuming 20 is the top and 0 is the bottom
-    circle.set_center((10, y_pos))  # Update circle position
+    y_pos = 20 - frame 
+    circle.set_center((10, y_pos))
     return circle,
 
 
@@ -43,6 +42,7 @@ def hideWindow(event):
         ani = FuncAnimation(fig, move2D, frames=np.linspace(0, 20, 100), init_func=init, blit=True, interval=20)
     startScreen = None
     startText = None
+    
 
 userID = 00
 #White background
@@ -121,7 +121,7 @@ def objectFound(click):
         end = time.time()
         totalTime = end - startTime
         formattedTime = format(totalTime, '.2f')
-        with open('dataCollection.txt', 'w') as file:
+        with open('level2.txt', 'w') as file:
             file.write(formattedTime)
         print("Element Found in:", formattedTime, "seconds!")   
         time_x_position = 24 
@@ -130,7 +130,6 @@ def objectFound(click):
         #hide screen after completion
         startScreen = patches.Rectangle((-5, -5), 30, 30, color='#b3c7f7', alpha=1.0, zorder=10, label='Click to start')
         ax.add_patch(startScreen)
-        found = False
         startText = ax.text(10, 10, 'Congrats! Level Complete!', color='black', fontsize=20, fontweight='bold', ha='center', va='center', zorder=11)
         cid = fig.canvas.mpl_connect('button_press_event', hideWindow)
         fig.canvas.draw()
