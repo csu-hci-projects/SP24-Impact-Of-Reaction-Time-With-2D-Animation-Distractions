@@ -1,0 +1,16 @@
+For this project, we wanted to see if 2D animations on a 20x20 grid would have an impact on reaction time. As a small 2 person group,
+we would meet twice a week before class to discuss progress, ideas, and more about the project.
+
+What each person completed:
+
+Ryan: 
+* Checkpoint 1: Did about 50% of it, edited it as well.
+* Wrote the code for the project
+* Got 10 Participants
+
+Yilong:
+-
+
+There were some small challenges from a coding perspective. Though i had used python a lot before, I never messed with any of the animations
+and elements like that, so it was a bit of a challenge to get the initial screen popup, grid, and really just the functionality of it since
+there was user input needed.
