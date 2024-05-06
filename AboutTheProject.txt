@@ -10,7 +10,9 @@ Ryan:
 * COntributed evenly to the writing the research paper.
 
 Yilong:
--
+* Checkpoint 1: Did about 50% of it.
+* Got 10 Participants.
+* Contributed evenly to writing the research paper.
 
 There were some small challenges from a coding perspective. Though i had used python a lot before, I never messed with any of the animations
 and elements like that, so it was a bit of a challenge to get the initial screen popup, grid, and really just the functionality of it since
